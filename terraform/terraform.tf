@@ -36,6 +36,7 @@ resource "digitalocean_droplet" "control_plane" {
     size = "s-1vcpu-512mb-10gb"
     image = data.digitalocean_image.debian.id
     vpc_uuid = digitalocean_vpc.main.id
+    ssh_keys = [ 54650135 ]
 }
 
 resource "digitalocean_droplet" "worker" {
@@ -45,4 +46,5 @@ resource "digitalocean_droplet" "worker" {
     size = "s-1vcpu-512mb-10gb"
     image = data.digitalocean_image.debian.id
     vpc_uuid = digitalocean_vpc.main.id
+    ssh_keys = [ 54650135 ]
 }

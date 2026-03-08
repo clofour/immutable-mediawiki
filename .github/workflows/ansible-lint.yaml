@@ -38,4 +38,4 @@ jobs:
         run: ansible-lint
 defaults:
   run:
-    working-directory: ./ansible
+    working-directory: ./packer/ansible

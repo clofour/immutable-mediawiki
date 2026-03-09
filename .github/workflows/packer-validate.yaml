@@ -7,6 +7,11 @@ jobs:
   validate:
     name: Packer Validate
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        image:
+          - control_plane
+          - worker
     steps:
       - uses: actions/checkout@v6
 
@@ -15,10 +20,10 @@ jobs:
           version: "1.15.0"
 
       - name: Initialize Packer project
-        run: packer init .
+        run: packer init ./${{ matrix.image }}
 
       - name: Run Packer Validate
-        run: packer validate .
+        run: packer validate ./${{ matrix.image }}
 defaults:
   run:
     working-directory: ./packer

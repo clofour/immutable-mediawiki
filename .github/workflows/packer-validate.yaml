@@ -20,10 +20,10 @@ jobs:
           version: "1.15.0"
 
       - name: Initialize Packer project
-        run: packer init ./${{ matrix.image }}
+        run: packer init ./${{ matrix.image }}.pkr.hcl
 
       - name: Run Packer Validate
-        run: packer validate ./${{ matrix.image }}
+        run: packer validate ./${{ matrix.image }}.pkr.hcl
 defaults:
   run:
     working-directory: ./packer

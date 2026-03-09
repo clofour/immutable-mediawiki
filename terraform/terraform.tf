@@ -12,7 +12,6 @@ variable "do_token" {
     type = string
     description = "DigitalOcean API Token"
     sensitive = true
-    ephemeral = true
 }
 
 provider "digitalocean" {

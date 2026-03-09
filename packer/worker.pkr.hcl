@@ -11,23 +11,13 @@ packer {
     }
 }
 
-variable "token" {
-    default = env("TOKEN")
-    sensitive = true
-}
-
-variable "key" {
-    default = env("KEY")
-    sensitive = true
-}
-
-variable "secret" {
-    default = env("SECRET")
+variable "do_api_token" {
+    default = env("DIGITALOCEAN_API_TOKEN")
     sensitive = true
 }
 
 source "digitalocean" "worker" {
-  api_token = var.token
+  api_token = var.do_api_token
   image = "debian-13-x64"
   region = "fra1"
   size = "s-1vcpu-512mb-10gb"
@@ -39,16 +29,5 @@ build {
 
     provisioner "ansible" {
         playbook_file = "./ansible/worker.yaml"
-    }
-
-    post-processor "digitalocean-import" {
-        api_token = var.token
-        spaces_key = var.key
-        spaces_secret = var.secret
-        spaces_region = "fra1"
-        space_name = "import-bucket"
-        image_name = "worker"
-        image_description = "Packer import {{timestamp}}"
-        image_regions = ["fra1"]
     }
 }

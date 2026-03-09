@@ -25,9 +25,7 @@ jobs:
 
       - name: Run Packer Validate
         env:
-          TOKEN: hello
-          KEY: hello
-          SECRET: hello
+          DIGITALOCEAN_API_TOKEN: hello
         run: packer validate ./${{ matrix.image }}.pkr.hcl
 defaults:
   run:

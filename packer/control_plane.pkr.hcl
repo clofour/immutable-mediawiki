@@ -27,7 +27,7 @@ variable "secret" {
 }
 
 source "digitalocean" "control_plane" {
-  api_token = "{{user `token`}}"
+  api_token = var.token
   image = "debian-13-x64"
   region = "fra1"
   size = "s-1vcpu-512mb-10gb"
@@ -42,9 +42,9 @@ build {
     }
 
     post-processor "digitalocean-import" {
-        api_token = "{{user `token`}}"
-        spaces_key = "{{user `key`}}"
-        spaces_secret = "{{user `secret`}}"
+        api_token = var.token
+        spaces_key = var.key
+        spaces_secret = var.secret
         spaces_region = "fra1"
         space_name = "import-bucket"
         image_name = "control_plane"

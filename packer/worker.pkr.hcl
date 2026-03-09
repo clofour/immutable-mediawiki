@@ -11,8 +11,23 @@ packer {
     }
 }
 
+variable "token" {
+    default = env("TOKEN")
+    sensitive = true
+}
+
+variable "key" {
+    default = env("KEY")
+    sensitive = true
+}
+
+variable "secret" {
+    default = env("SECRET")
+    sensitive = true
+}
+
 source "digitalocean" "worker" {
-  api_token = "{{env `token`}}"
+  api_token = "{{user `token`}}"
   image = "debian-13-x64"
   region = "fra1"
   size = "s-1vcpu-512mb-10gb"
@@ -27,9 +42,9 @@ build {
     }
 
     post-processor "digitalocean-import" {
-        api_token = "{{env `token`}}"
-        spaces_key = "{{env `key`}}"
-        spaces_secret = "{{env `secret`}}"
+        api_token = "{{user `token`}}"
+        spaces_key = "{{user `key`}}"
+        spaces_secret = "{{user `secret`}}"
         spaces_region = "fra1"
         space_name = "import-bucket"
         image_name = "worker"

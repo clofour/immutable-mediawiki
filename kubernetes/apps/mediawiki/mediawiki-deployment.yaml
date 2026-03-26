@@ -13,33 +13,20 @@ spec:
         app: mediawiki
     spec:
       serviceAccountName: service-account
-      initContainers:
-        - name: init-mediawiki
-          image: dhi.io/mediawiki:1.45.1-debian13-php-fpm-dev
-          command:
-            - sh
-            - -c
-            - |
-                if [ ! -f /data/LocalSettings.php ]; then
-                  cp -r /var/www/html/* /data/
-                fi
-          volumeMounts:
-            - name: document-root
-              mountPath: /data
       containers:
         - name: mediawiki
           image: ghcr.io/clofour/mediawiki:main
           volumeMounts:
-            - name: document-root
-              mountPath: /var/www/html
+            - name: images
+              mountPath: /var/www/html/images
             - name: mw-config
               subPath: config
               mountPath: /var/www/html/LocalSettings.php
               readOnly: true
       volumes:
-        - name: document-root
+        - name: images
           persistentVolumeClaim:
-            claimName: document-root
+            claimName: images
         - name: mw-config
           configMap:
             name: mw-config

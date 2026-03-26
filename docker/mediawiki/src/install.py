@@ -3,16 +3,16 @@ import yaml
 from git import Repo
 
 config = {}
-script_path = os.path.realpath(__file__)
-script_directory_path = os.path.dirname(script_path)
-mediawiki_directory_path = os.path.join(script_directory_path, "mediawiki")
+build_dir_path = os.environ.get("BUILD_DIR")
+config_path = os.path.join(build_dir_path, "config.yaml")
+mediawiki_dir_path = os.environ.get("MEDIAWIKI_DIR")
 
-with open("config.yaml", "r") as file:
+with open(config_path, "r") as file:
     config = yaml.safe_load(file)
 
-mediawiki_repo = Repo.clone_from(config["repo"], mediawiki_directory_path)
+mediawiki_repo = Repo.clone_from(config["repo"], mediawiki_dir_path)
 
 for extensionName, extension in config["extensions"].items():
-    extension_path = os.path.join(mediawiki_directory_path, extension["dest"])
+    extension_path = os.path.join(mediawiki_dir_path, extension["dest"])
 
     extension_repo = Repo.clone_from(extension["repo"], extension_path)

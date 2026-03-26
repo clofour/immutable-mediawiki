@@ -19,7 +19,7 @@ mediawiki_repo = Repo.clone_from(
     to_path=mediawiki_dir_path,
     multi_options=[
         "--depth 1",
-        f"--branch {config["version"]}"
+        f"--branch {config['version']}"
     ]
 )
 
@@ -31,6 +31,6 @@ for extensionName, extension in config["extensions"].items():
         to_path=extension_path,
         multi_options=[
             "--depth 1",
-            f"--branch {extension["version"]}"
+            f"--branch {extension['version']}"
         ]
     )

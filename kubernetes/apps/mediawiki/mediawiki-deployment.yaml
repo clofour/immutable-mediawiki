@@ -23,6 +23,10 @@ spec:
               subPath: config
               mountPath: /var/www/html/LocalSettings.php
               readOnly: true
+            - name: apache-config
+              subPath: config
+              mountPath: /usr/local/apache2/conf/httpd.conf
+              readOnly: true
       volumes:
         - name: images
           persistentVolumeClaim:

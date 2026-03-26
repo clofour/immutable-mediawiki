@@ -12,31 +12,25 @@ spec:
       labels:
         app: mediawiki
     spec:
+      serviceAccountName: service-account
       containers:
         - name: mediawiki
-          image: dhi.io/mediawiki:1.45.1-debian13-php-fpm
+          image: ghcr.io/clofour/mediawiki:main
           volumeMounts:
-            - name: document-root
-              mountPath: /var/www/html
-            - name: data
-              mountPath: /var/www/data
+            - name: images
+              mountPath: /var/www/html/images
             - name: mw-config
               subPath: config
               mountPath: /var/www/html/LocalSettings.php
               readOnly: true
-        - name: apache
-          image: dhi.io/httpd:2.4.66-debian13
-          volumeMounts:
-            - name: document-root
-              mountPath: /var/www/html
+            - name: apache-config
+              subPath: config
+              mountPath: /usr/local/apache2/conf/httpd.conf
               readOnly: true
       volumes:
-        - name: document-root
+        - name: images
           persistentVolumeClaim:
-            claimName: document-root
-        - name: data
-          persistentVolumeClaim:
-            claimName: data
+            claimName: images
         - name: mw-config
           configMap:
             name: mw-config

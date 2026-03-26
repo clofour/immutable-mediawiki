@@ -23,7 +23,6 @@ jobs:
       matrix:
         image:
           - mediawiki
-          - apache
           - mysql
     steps:
       - name: Checkout repository
